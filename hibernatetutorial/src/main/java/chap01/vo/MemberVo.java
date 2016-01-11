@@ -1,4 +1,4 @@
-package chap01.crud;
+package chap01.vo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
