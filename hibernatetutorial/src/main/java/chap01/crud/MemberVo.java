@@ -5,16 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity		// javax.persistence에서 import함. 테이블에 매핑하겠다는 의미
-public class MemberDao {
+public class MemberVo {
 	@Id					// primary key
 	@GeneratedValue		// auto increase
 	private int id;
 	private String name;
 	private String message;
 
-	public MemberDao() {}	// default constructor 필요
+	public MemberVo() {}	// default constructor 필요
 
-	public MemberDao(String name, String message) {
+	public MemberVo(String name, String message) {
 		super();
 		this.name = name;
 		this.message = message;
