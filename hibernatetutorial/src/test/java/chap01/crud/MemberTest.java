@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 
+import chap01.vo.MemberVo;
 import util.HibernateUtil;
 
 public class MemberTest {
@@ -27,12 +28,12 @@ public class MemberTest {
 
 		// Select One
 		System.out.println("\n[select by ID]");
-		MemberDao selectedMember = selectById(1);
+		MemberVo selectedMember = selectById(1);
 		assertEquals(VWAN, selectedMember.getName());
 
 		// Select all
 		System.out.println("\n[select all]");
-		List<MemberDao> list = selectAll();
+		List<MemberVo> list = selectAll();
 		System.out.println(list);
 
 		// Update
@@ -42,7 +43,7 @@ public class MemberTest {
 
 		// Confirm Update
 		System.out.println("\n[confirm update]");
-		MemberDao updatedMember = selectById(1);
+		MemberVo updatedMember = selectById(1);
 		assertEquals(HELLO_HIBERNATE, updatedMember.getMessage());
 
 		// Delete
@@ -51,57 +52,57 @@ public class MemberTest {
 
 		// Confirm Delete
 		System.out.println("\n[confirm delete]");
-		MemberDao deleteMember = selectById(1);
+		MemberVo deleteMember = selectById(1);
 		assertNull(deleteMember);
 	}
 
 	public void insert() {
-		MemberDao member = new MemberDao(VWAN, HELLO_WORLD);
+		MemberVo member = new MemberVo(VWAN, HELLO_WORLD);
 		insert(member);
 
-		member = new MemberDao("Dopingcat", HELLO_HIBERNATE);
+		member = new MemberVo("Dopingcat", HELLO_HIBERNATE);
 		insert(member);
 
-		member = new MemberDao("Test1", "Test1");
+		member = new MemberVo("Test1", "Test1");
 		insert(member);
 
-		member = new MemberDao("Test2", "Test2");
+		member = new MemberVo("Test2", "Test2");
 		insert(member);
 	}
 
-	public List<MemberDao> selectAll() {
+	public List<MemberVo> selectAll() {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from Member");
-		List<MemberDao> list = query.list();
+		List<MemberVo> list = query.list();
 		session.getTransaction().commit();
 		return list;
 	}
 
-	public void delete(MemberDao updatedMember) {
+	public void delete(MemberVo updatedMember) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		session.delete(updatedMember);
 		session.getTransaction().commit();
 	}
 
-	public void update(MemberDao selectedMember) {
+	public void update(MemberVo selectedMember) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		session.update(selectedMember);
 		session.getTransaction().commit();
 	}
 
-	public MemberDao selectById(int i) {
+	public MemberVo selectById(int i) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
-		MemberDao selectedMember = (MemberDao) session.get(MemberDao.class, i);
+		MemberVo selectedMember = (MemberVo) session.get(MemberVo.class, i);
 		session.getTransaction().commit();
 
 		return selectedMember;
 	}
 
-	public void insert(MemberDao member) {
+	public void insert(MemberVo member) {
 		Session session = factory.getCurrentSession();
 		// Transaction begin
 		session.beginTransaction();
