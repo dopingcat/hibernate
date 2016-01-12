@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class BoardArticleVo {
+public class BoardArticle {
 	@Id
 	@GeneratedValue
 	private int id;
@@ -15,9 +15,9 @@ public class BoardArticleVo {
 	private String message;
 	private Date dateWrite;
 
-	public BoardArticleVo() {}
+	public BoardArticle() {}
 
-	public BoardArticleVo(String userId, String message, Date dateWrite) {
+	public BoardArticle(String userId, String message, Date dateWrite) {
 		super();
 		this.userId = userId;
 		this.message = message;

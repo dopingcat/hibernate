@@ -25,7 +25,7 @@
 		<property name="show_sql">true</property>
 		<property name="hbm2ddl.auto">create</property>
 		
-		<mapping class="chap01.crud.Member" />
+		<mapping class="chap01.vo.Member" />
 		<mapping class="chap04.BoardArticle" />
 	</session-factory>
 </hibernate-configuration>

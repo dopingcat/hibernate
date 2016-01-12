@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 
-import chap01.vo.MemberVo;
+import chap01.vo.Member;
 import util.HibernateUtil;
 
 public class MemberTest {
@@ -28,12 +28,12 @@ public class MemberTest {
 
 		// Select One
 		System.out.println("\n[select by ID]");
-		MemberVo selectedMember = selectById(1);
+		Member selectedMember = selectById(1);
 		assertEquals(VWAN, selectedMember.getName());
 
 		// Select all
 		System.out.println("\n[select all]");
-		List<MemberVo> list = selectAll();
+		List<Member> list = selectAll();
 		System.out.println(list);
 
 		// Update
@@ -43,7 +43,7 @@ public class MemberTest {
 
 		// Confirm Update
 		System.out.println("\n[confirm update]");
-		MemberVo updatedMember = selectById(1);
+		Member updatedMember = selectById(1);
 		assertEquals(HELLO_HIBERNATE, updatedMember.getMessage());
 
 		// Delete
@@ -52,57 +52,57 @@ public class MemberTest {
 
 		// Confirm Delete
 		System.out.println("\n[confirm delete]");
-		MemberVo deleteMember = selectById(1);
+		Member deleteMember = selectById(1);
 		assertNull(deleteMember);
 	}
 
 	public void insert() {
-		MemberVo member = new MemberVo(VWAN, HELLO_WORLD);
+		Member member = new Member(VWAN, HELLO_WORLD);
 		insert(member);
 
-		member = new MemberVo("Dopingcat", HELLO_HIBERNATE);
+		member = new Member("Dopingcat", HELLO_HIBERNATE);
 		insert(member);
 
-		member = new MemberVo("Test1", "Test1");
+		member = new Member("Test1", "Test1");
 		insert(member);
 
-		member = new MemberVo("Test2", "Test2");
+		member = new Member("Test2", "Test2");
 		insert(member);
 	}
 
-	public List<MemberVo> selectAll() {
+	public List<Member> selectAll() {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from Member");
-		List<MemberVo> list = query.list();
+		List<Member> list = query.list();
 		session.getTransaction().commit();
 		return list;
 	}
 
-	public void delete(MemberVo updatedMember) {
+	public void delete(Member updatedMember) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		session.delete(updatedMember);
 		session.getTransaction().commit();
 	}
 
-	public void update(MemberVo selectedMember) {
+	public void update(Member selectedMember) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		session.update(selectedMember);
 		session.getTransaction().commit();
 	}
 
-	public MemberVo selectById(int i) {
+	public Member selectById(int i) {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
-		MemberVo selectedMember = (MemberVo) session.get(MemberVo.class, i);
+		Member selectedMember = (Member) session.get(Member.class, i);
 		session.getTransaction().commit();
 
 		return selectedMember;
 	}
 
-	public void insert(MemberVo member) {
+	public void insert(Member member) {
 		Session session = factory.getCurrentSession();
 		// Transaction begin
 		session.beginTransaction();
