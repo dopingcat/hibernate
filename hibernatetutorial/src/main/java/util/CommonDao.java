@@ -12,7 +12,7 @@ public class CommonDao<T> {
 	private String boardName;
 
 	public CommonDao(Class<?> clazz) {
-		factory = HibernateUtil.getSessionFactory();
+		factory = HibernateTestUtil.getSessionFactory(clazz);
 		this.clazz = clazz;
 		this.boardName = clazz.getSimpleName();
 	}
