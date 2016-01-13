@@ -7,7 +7,6 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import chap01.vo.Member;
 import chap04.vo.BoardArticle;
 import chap04.vo.Comments;
 import util.CommonDao;
@@ -18,7 +17,6 @@ public class BoardArticleTest {
 	private static final String VWAN = "Vwan";
 
 	CommonDao<BoardArticle> boardDao = new CommonDao<>(BoardArticle.class);
-	CommonDao<Member> memberDao = new CommonDao<>(Member.class);
 	CommonDao<Comments> commentsDao = new CommonDao<>(Comments.class);
 
 	@Before
