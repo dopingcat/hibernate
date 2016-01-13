@@ -1,4 +1,4 @@
-package chap04;
+package chap04.vo;
 
 import java.util.Date;
 
