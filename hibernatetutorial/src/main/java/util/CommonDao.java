@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 
 public class CommonDao<T> {
 	private SessionFactory factory;
@@ -15,6 +16,7 @@ public class CommonDao<T> {
 		factory = HibernateTestUtil.getSessionFactory(clazz);
 		this.clazz = clazz;
 		this.boardName = clazz.getSimpleName();
+		System.out.println("[BoardName : " + boardName + "]");
 	}
 
 	public List<?> selectList() {
@@ -53,5 +55,32 @@ public class CommonDao<T> {
 		session.beginTransaction();
 		session.save(vo);
 		session.getTransaction().commit();
+	}
+
+	public int deleteAll() {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		int result = session.createQuery("delete from " + boardName).executeUpdate();
+		session.getTransaction().commit();
+		return result;
+	}
+
+	public long count() {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		long cnt = (Long) session.createCriteria(clazz).setProjection(Projections.rowCount()).uniqueResult();
+		session.getTransaction().commit();
+		return cnt;
+	}
+
+	public List<?> getPagedList(int page, int viewSize) {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from " + boardName + " order by id asc");
+		query.setFirstResult((page-1)*viewSize);	// (page-1) * viewSize	[e.g. 0, 10, 20...]
+		query.setMaxResults(viewSize);				// viewSize				[e.g. 9, 19, 29...]
+		List<?> list = query.list();
+		session.getTransaction().commit();
+		return list;
 	}
 }
