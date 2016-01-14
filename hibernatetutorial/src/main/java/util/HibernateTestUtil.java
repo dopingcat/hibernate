@@ -17,7 +17,6 @@ public class HibernateTestUtil {
 		if(sessionFactory == null) {
 			try {
 				configFile = "/" + clazz.getPackage().getName().replace('.', '/') + "/" + configFile;
-				System.err.println(configFile);
 				Configuration cfg = new Configuration().configure(configFile);
 				StandardServiceRegistryBuilder sb = new StandardServiceRegistryBuilder();
 				sb.applySettings(cfg.getProperties());
