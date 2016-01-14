@@ -16,7 +16,6 @@ public class CommonDao<T> {
 		factory = HibernateTestUtil.getSessionFactory(clazz);
 		this.clazz = clazz;
 		this.boardName = clazz.getSimpleName();
-		System.out.println("[BoardName : " + boardName + "]");
 	}
 
 	public List<?> selectList() {
