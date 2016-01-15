@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,19 +23,20 @@ public class StudentTest {
 
 	@Before
 	public void setUp() {
-		studentDao.insert(new Student("Student01", 100, 100, 100, 100));
-		studentDao.insert(new Student("Student02",  25, 100, 100, 100));
-		studentDao.insert(new Student("Student03",  22,  90, 100, 100));
-		studentDao.insert(new Student("Student04",  20, 100,  90, 100));
-		studentDao.insert(new Student("Student05",  23, 100, 100,  90));
-		studentDao.insert(new Student("Student06",  21,  90, 100, 100));
-		studentDao.insert(new Student("Student07",  19,  90,  90, 100));
-		studentDao.insert(new Student("Student08",  24, 100,  90,  90));
-		studentDao.insert(new Student("Student09",  26, 100, 100,  90));
-		studentDao.insert(new Student("Student10",  27,  90,  90,  90));
+		studentDao.deleteAll();
+		studentDao.insert(new Student("Student01", 100, 100, 100,  50));
+		studentDao.insert(new Student("Student02",  25,  90,  10,  30));
+		studentDao.insert(new Student("Student03",  22,  80,  20,  20));
+		studentDao.insert(new Student("Student04",  20,  70,  30,  40));
+		studentDao.insert(new Student("Student05",  23,  60,  40,  90));
+		studentDao.insert(new Student("Student06",  21,  40,  50, 100));
+		studentDao.insert(new Student("Student07",  19,  30,  60,  90));
+		studentDao.insert(new Student("Student08",  24,  10,  70,  80));
+		studentDao.insert(new Student("Student09",  26,   0,  80,  70));
+		studentDao.insert(new Student("Student10",  27,  90,  90,  60));
 	}
 
-	@Test
+	//@Test
 	public void test() {
 		// confirm setUp()
 		assertEquals(10, studentDao.count());
@@ -60,5 +62,30 @@ public class StudentTest {
 		System.out.println();
 		// lambda
 		students.forEach(student -> System.out.println(student));
+	}
+
+	// Restriction additional
+	//@Test
+	public void restriction() throws Exception {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		Criteria criteria = session.createCriteria(Student.class);
+		criteria.add(Restrictions.or(Restrictions.between("age", 21, 25), Restrictions.between("kor", 70, 90)));
+		List<Student> list = criteria.list();
+		System.err.println("\n[나이가 21에서 25사이 이거나, 국어 점수가 70점 에서 90 사이]");
+		list.forEach(student -> System.out.println(student));
+		session.getTransaction().commit();
+	}
+
+	// Projection
+	// Doc : https://docs.jboss.org/hibernate/orm/3.6/javadocs/org/hibernate/criterion/Projections.html
+	@Test
+	public void projection() throws Exception {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		Criteria criteria = session.createCriteria(Student.class);
+		double avg = (double)criteria.setProjection(Projections.avg("kor")).uniqueResult();
+		System.err.println("\n[kor score avg] : " + avg);
+		session.getTransaction().commit();
 	}
 }
