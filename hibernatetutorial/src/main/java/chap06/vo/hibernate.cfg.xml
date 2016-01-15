@@ -27,5 +27,6 @@
 		
 		<!-- Class DB Mapping -->
 		<mapping class="chap06.vo.UserDetail" />
+		<mapping class="chap06.vo.StockDailyRecord" />
 	</session-factory>
 </hibernate-configuration>
