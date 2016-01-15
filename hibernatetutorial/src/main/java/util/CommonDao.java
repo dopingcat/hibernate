@@ -18,6 +18,11 @@ public class CommonDao<T> {
 		this.boardName = clazz.getSimpleName();
 	}
 
+	//Static Factory Method for Study
+	public static <T> CommonDao<T> newInstance(Class<?> clazz){
+		return new CommonDao<T>(clazz);
+	}
+
 	public List<?> selectList() {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
