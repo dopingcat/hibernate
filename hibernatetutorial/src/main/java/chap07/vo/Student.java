@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
+@NamedQuery(name="FindByAge", query="from Student where age >= ?")
 public class Student {
 	@Id
 	@GeneratedValue
